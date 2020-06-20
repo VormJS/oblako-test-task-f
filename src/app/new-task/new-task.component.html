@@ -1,0 +1,48 @@
+<!-- 
+<div mat-dialog-content>
+  <p>What's your email?</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.taskText">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No</button>
+  <button mat-button [mat-dialog-close]="data.taskText" cdkFocusInitial>Yes</button>
+</div> -->
+<mat-card class="dialog-card">
+  <mat-card-title>
+    New task
+  </mat-card-title>
+  <mat-divider></mat-divider>
+  <form [formGroup]="newTaskForm" (ngSubmit)="submit(newTaskForm.value)" class="form">
+    
+    <mat-form-field class="form-element">
+      <mat-label></mat-label>
+      <input matInput placeholder="Task title..." formControlName="taskText">
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <mat-label>Project</mat-label>
+      <mat-select formControlName="project">
+        <mat-option [value]="'New'"> New </mat-option>
+        <mat-option *ngFor="let project of projects" [value]="project.title">
+          {{ project.title }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-element" *ngIf="newTaskForm.value.project=='New'">
+      <mat-label></mat-label>
+      <input matInput placeholder="Project title..." formControlName="newProjectTitle">
+    </mat-form-field>
+
+    <mat-dialog-actions class="form-element">
+      <button mat-button mat-dialog-close class="button">Cancel</button>
+      <button mat-raised-button mat-dialog-close color="primary" type="submit" class="button">Save</button>
+    </mat-dialog-actions>
+  </form>
+</mat-card>
+
+<div>
+  {{ newTaskForm.value | json }}
+</div>
