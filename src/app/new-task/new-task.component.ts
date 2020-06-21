@@ -44,14 +44,14 @@ export class NewTaskComponent implements OnInit {
   }
 
   submit(newTask:NewTaskData){
-    console.log(newTask)
-    console.log(this.projects)
-    const targetProject = this.projects.find(project => project.title === newTask.newProjectTitle)
-    if (newTask.project === 'New' && !targetProject ){ 
-      this.createProjectAndTask(newTask.newProjectTitle, newTask.taskText)
+    const newProjectPicked = newTask.project === 'New'
+    const projectTitle = newProjectPicked ? newTask.newProjectTitle : newTask.project
+    const targetProject = this.projects.find(project => project.title === projectTitle)
+
+    if (newProjectPicked && !targetProject){ 
+      this.createProjectAndTask(projectTitle, newTask.taskText)
     } else {
-      const projectID = targetProject.id
-      this.addTaskToProject(projectID, newTask.taskText)
+      this.addTaskToProject(targetProject.id, newTask.taskText)
     }
   }
   createProjectAndTask(projectTitle: string, taskText: string): void{
