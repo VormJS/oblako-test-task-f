@@ -12,19 +12,20 @@ export class ProjectsComponent implements OnInit {
 
   projects: Project[];
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService) {
+    this.projectService.projects.subscribe( projects => {
+      this.projects = projects;
+    });
+  }
 
   ngOnInit() {
     this.getProjects()
   }
-
   getProjects(): void {
     this.projectService.getProjects()
-        .subscribe(projects => this.projects = projects);
   }
   completeTask(task: Todo, projectID: number): void{
     task.isCompleted = !task.isCompleted
-    // console.log(JSON.stringify(task) + '\nprojectID: ' + projectID)
     this.projectService.updateTask(projectID, task.id)
         .subscribe()
   }

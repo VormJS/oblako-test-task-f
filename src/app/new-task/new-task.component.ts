@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProjectService } from '../projects/project.service';
 import { Project } from '../projects/project';
@@ -17,16 +17,18 @@ interface NewTaskData {
 export class NewTaskComponent implements OnInit {
 
   newTaskForm: FormGroup;
-  projects: Project[] = [];
-
+  projects: Project[];
 
   constructor(
     private fb: FormBuilder,
-    private projectService: ProjectService
-  ){}
+    private projectService: ProjectService,
+  ){
+    this.projectService.projects.subscribe( projects => {
+      this.projects = projects;
+    });
+  }
   ngOnInit(): void {
     this.newTask();
-    this.getProjects();
   }
 
   newTask(){
@@ -39,26 +41,25 @@ export class NewTaskComponent implements OnInit {
 
   getProjects(): void {
     this.projectService.getProjects()
-        .subscribe(projects => this.projects = projects);
   }
 
   submit(newTask:NewTaskData){
     console.log(newTask)
     console.log(this.projects)
-    if (newTask.project === 'New' && !(this.projects.findIndex(project => project.title === newTask.newProjectTitle) !== -1)) {
-      console.log('works!')
-      // createProjectAndTask(newTask.newProjectTitle, newTask.taskText)
+    const targetProject = this.projects.find(project => project.title === newTask.newProjectTitle)
+    if (newTask.project === 'New' && !targetProject ){ 
+      this.createProjectAndTask(newTask.newProjectTitle, newTask.taskText)
     } else {
-      console.log('craps!')
-    //   addTaskToProject()
+      const projectID = targetProject.id
+      this.addTaskToProject(projectID, newTask.taskText)
     }
   }
-  // createProjectAndTask(projectTitle: string, taskText: string): void{
-  //   this.projectService.createProjectAndTask(projectTitle, taskText)
-  //       .subscribe()
-  // }
-  // addTaskToProject(task: Todo, projectID: number): void{
-  //   this.projectService.updateTask(projectID, task.id)
-  //       .subscribe()
-  // }
+  createProjectAndTask(projectTitle: string, taskText: string): void{
+    this.projectService.createProjectAndTask(projectTitle, taskText)
+        .subscribe()
+  }
+  addTaskToProject(projectID: number, taskText: string): void{
+    this.projectService.addTaskToProject(projectID, taskText)
+        .subscribe()
+  }
 }
