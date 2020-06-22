@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { NewTaskComponent } from './new-task/new-task.component';
+import { NewTaskComponent } from '../components/new-task/new-task.component';
 
 
 

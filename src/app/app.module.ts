@@ -17,9 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { ProjectsComponent } from './projects/projects.component';
-import { NewTaskComponent } from './new-task/new-task.component';
+import { AppComponent } from './components/app.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { NewTaskComponent } from './components/new-task/new-task.component';
 
 
 @NgModule({

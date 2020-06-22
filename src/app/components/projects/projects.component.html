@@ -1,0 +1,17 @@
+<div class="project-container">
+  <mat-card class="project-card" *ngFor="let project of projects">
+    <mat-card-title>
+      {{ project.title }}
+    </mat-card-title>
+    <mat-divider></mat-divider>
+    <mat-list>
+      <mat-list-item class="list-item" *ngFor="let todo of project.todos" [class.todo-is-completed]=todo.isCompleted>
+        <mat-checkbox [checked]=todo.isCompleted class="checkbox-default" (change)="completeTask(todo, project.id)">
+          <span class="check-box-label">
+          {{ todo.text }}
+          </span>
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

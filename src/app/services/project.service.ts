@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Project } from './project';
-
-
+import { Project } from '../models/project';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +12,8 @@ export class ProjectService {
   public projects: BehaviorSubject<Project[]> = new BehaviorSubject<Project[]>([]);
 
   constructor(private http: HttpClient) { }
-  // private projectsUrl = 'https://cors-anywhere.herokuapp.com/https://vast-depths-88918.herokuapp.com/projects'
-  private projectsUrl = 'https://vast-depths-88918.herokuapp.com/projects'
-
-  // private todosUrl = 'https://cors-anywhere.herokuapp.com/https://vast-depths-88918.herokuapp.com/todos'
-  private todosUrl = 'https://vast-depths-88918.herokuapp.com/todos'
+  private projectsUrl = `${environment.apiUrl}/projects`
+  private todosUrl = `${environment.apiUrl}/todos`
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -36,7 +32,6 @@ export class ProjectService {
     const todoJson= JSON.stringify({todo: {
       "text": taskText,
       "isCompleted": false,
-      "is_new_project": "true",
       "new_project_title": projectTitle
     }});
     return this.http.post(this.todosUrl, todoJson, this.httpOptions).pipe(

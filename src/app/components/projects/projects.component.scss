@@ -1,0 +1,47 @@
+.project-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 35px;
+  flex-flow: wrap;
+  align-items: baseline;
+}
+.project-card {
+  flex-basis: 28%;
+  margin: 0 0 25px 0;
+  overflow-wrap: anywhere;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option .list-item {
+  min-height: 48px;
+  height: auto;
+  display: flex;
+}
+
+.checkbox-default{
+  margin: 0 1em 0 0;
+}
+.todo-is-completed{
+  text-decoration: line-through;
+}
+.check-box-label{
+  white-space: normal
+}
+
+@media (max-width: 900px) {
+  .project-container {
+    padding: 20px;
+  }
+  .project-card {
+    flex-basis: 42%;
+    margin: 0 0 20px 0;
+  }
+}
+@media (max-width: 550px) {
+  .project-container {
+    padding: 15px;
+  }
+  .project-card {
+    flex-basis: 95%;
+    margin: 0 0 15px 0;
+  }
+}
