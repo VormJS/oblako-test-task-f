@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '../../models/project';
 import { Todo } from '../../models/todo';
-import { ProjectService } from '../../services/project.service';
+import { Observable } from 'rxjs';
+import { ProjectDataService } from '../../services/project-data.service';
 
 @Component({
   selector: 'app-projects',
@@ -10,23 +11,16 @@ import { ProjectService } from '../../services/project.service';
 })
 export class ProjectsComponent implements OnInit {
 
-  projects: Project[];
+  projects$: Observable<Project[]>
 
-  constructor(private projectService: ProjectService) {
-    this.projectService.projects.subscribe( projects => {
-      this.projects = projects;
-    });
-  }
+  constructor(
+    private projectDataService: ProjectDataService
+  ) { }
 
   ngOnInit() {
-    this.getProjects()
+    this.projects$ = this.projectDataService.projects
   }
-  getProjects(): void {
-    this.projectService.getProjects()
-  }
-  completeTask(task: Todo, projectID: number): void{
-    task.isCompleted = !task.isCompleted
-    this.projectService.updateTask(projectID, task.id)
-        .subscribe()
+  toggleTaskComplete(task: Todo): void {
+    this.projectDataService.updateTask(task)
   }
 }

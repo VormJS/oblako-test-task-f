@@ -5,18 +5,18 @@
   flex-flow: wrap;
   align-items: baseline;
 }
+.loader{
+  margin: 25vh auto 0 auto;
+}
 .project-card {
   flex-basis: 28%;
   margin: 0 0 25px 0;
-  overflow-wrap: anywhere;
 }
-
 .mat-list-base .mat-list-item, .mat-list-base .mat-list-option .list-item {
   min-height: 48px;
   height: auto;
   display: flex;
 }
-
 .checkbox-default{
   margin: 0 1em 0 0;
 }
